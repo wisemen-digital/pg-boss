@@ -435,7 +435,7 @@ function cancelDuplicateJobs (schema) {
           job.id FROM pgboss.job job
         LEFT JOIN pgboss.job existing ON existing.id <> job.id
           AND job.singletonkey = existing.singletonkey
-          AND existing.state = '${states.created}'
+          AND existing.state < '${states.active}'
       WHERE
         job.state = '${states.active}'
         AND(job.startedOn + job.expireIn) < now()
